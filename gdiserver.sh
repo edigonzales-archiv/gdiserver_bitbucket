@@ -38,19 +38,19 @@
 #mkdir ~/sources
 #git clone https://github.com/qgis/QGIS.git ~/sources/qgis_master
 #mkdir ~/sources/qgis_master/build
-#cd ~/sources/qgis_master/build
-#cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=ON
-#make -j2
-#make install
-#cd ~
-#/usr/local/qgis_master/lib/qgis/crssync
+cd ~/sources/qgis_master/build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF
+make -j2
+make install
+cd ~
+/usr/local/qgis_master/lib/qgis/crssync
 
 # Install some additional stuff
-apt-get --yes install vim
-apt-get --yes install subversion
-apt-get --yes install geany
-apt-get --yes install qt4-designer qt4-qtconfig python-qt4-sql libqt4-sql-psql qt4-dev-tools
-apt-get --yes install python-psycopg2
+#apt-get --yes install vim
+#apt-get --yes install subversion
+#apt-get --yes install geany
+#apt-get --yes install qt4-designer qt4-qtconfig python-qt4-sql libqt4-sql-psql qt4-dev-tools
+#apt-get --yes install python-psycopg2
 
 # Fonts...
 
