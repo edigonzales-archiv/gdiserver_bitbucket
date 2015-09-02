@@ -1,5 +1,14 @@
 #!/bin/bash
 
+OSUSER="stefan"
+
+DBADMIN="stefan"
+DBADMINPWD="ziegler12"
+DBUSR="mspublic"
+DBPWD="mspublic"
+DBNAME="xanadu2"
+
+
 # Update system
 #apt-get update
 #apt-get --yes dist-upgrade
@@ -23,8 +32,9 @@
 #apt-get --yes install libqscintilla2-dev cmake-curses-gui cmake-qt-gui gdal-bin python-gdal python-qscintilla2 git
 
 # Download NTv2 grids and copy to /usr/share/proj/
+#cd ~
 #apt-get --yes install proj-bin zip curl
-#curl -O http://www.swisstopo.admin.ch/internet/swisstopo/de/home/products/software/software.parsys.7090.downloadList.55545.DownloadFile.tmp/chenyx06ntv2.zip
+#wget http://www.swisstopo.admin.ch/internet/swisstopo/de/home/products/software/software.parsys.7090.downloadList.55545.DownloadFile.tmp/chenyx06ntv2.zip -O chenyx06ntv2.zip
 #unzip -d /usr/share/proj/ chenyx06ntv2.zip CHENYX06a.gsb
 
 #apt-get --yes install gdal-bin
@@ -49,8 +59,8 @@
 
 # PDAL (w/ all its dependencies)
 # laszip
-#apt-get install --yes autoconf build-essential cmake docbook-mathml docbook-xsl libboost-dev libboost-all-dev libboost-filesystem-dev libboost-timer-dev libcgal-dev libcunit1-dev libgdal-dev libgeos++-dev libgeotiff-dev libgmp-dev libjson0-dev libjson-c-dev liblas-dev libmpfr-dev libopenscenegraph-dev libpq-dev libproj-dev libxml2-dev postgresql-server-dev-9.3 xsltproc git build-essential wget
 #cd ~
+#apt-get install --yes autoconf build-essential cmake docbook-mathml docbook-xsl libboost-dev libboost-all-dev libboost-filesystem-dev libboost-timer-dev libcgal-dev libcunit1-dev libgdal-dev libgeos++-dev libgeotiff-dev libgmp-dev libjson0-dev libjson-c-dev liblas-dev libmpfr-dev libopenscenegraph-dev libpq-dev libproj-dev libxml2-dev postgresql-server-dev-9.3 xsltproc git build-essential wget
 #wget https://github.com/LASzip/LASzip/releases/download/v2.2.0/laszip-src-2.2.0.tar.gz
 #tar xvfz laszip-src-2.2.0.tar.gz -C ~/sources/
 #cd ~/sources/laszip-src-2.2.0/
@@ -68,7 +78,7 @@
 #mkdir ~/sources/libLAS-1.8.0/build
 #cd ~/sources/libLAS-1.8.0/build
 #cmake .. -DWITH_GDAL=ON -DWITH_GEOTIFF=ON -DWITH_LASZIP=ON -DWITH_UTILITIES=ON
-#make
+#make -j2
 #make install
 #cd ~
 
@@ -99,10 +109,6 @@
 #make install
 #cd ~
 
-# I think we need to to the java/groovy stuff at the end
-# since gvm needs to write some lines into .bashrc on 
-# the last line.
-
 # Install Oracle Java (silent option for accepting license)
 #add-apt-repository --yes ppa:webupd8team/java
 #apt-get update
@@ -110,36 +116,39 @@
 #apt-get --yes install oracle-java8-installer
 
 # Install native JAI
+# Silent overwrite will not work.
 #cd ~
 #wget https://www.dropbox.com/s/7mwcvtreipufy0u/jai-1_1_3-lib-linux-amd64-jdk.bin?dl=0 -O jai-1_1_3-lib-linux-amd64-jdk.bin
 #cp jai-1_1_3-lib-linux-amd64-jdk.bin /usr/lib/jvm/java-8-oracle/
 #cd /usr/lib/jvm/java-8-oracle/
-#sudo su
 #sh ./jai-1_1_3-lib-linux-amd64-jdk.bin >/dev/null < <(echo y) >/dev/null < <(echo y)
-#sudo su stefan
 #cd ~
 
 #cd ~
 #wget https://www.dropbox.com/s/arpsxaumi0f9hzp/jai_imageio-1_1-lib-linux-amd64-jdk.bin?dl=0 -O jai_imageio-1_1-lib-linux-amd64-jdk.bin
 #sed s/+215/-n+215/ jai_imageio-1_1-lib-linux-amd64-jdk.bin > jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin
 #cp jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin /usr/lib/jvm/java-8-oracle/
-# _POSIX2_VERSION=199209 sh ./jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin >/dev/null < <(echo y) >/dev/null < <(echo y)
+#cd /usr/lib/jvm/java-8-oracle/
+#_POSIX2_VERSION=199209 sh ./jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin >/dev/null < <(echo y) >/dev/null < <(echo y)
 #cd ~
 
 # Maven
 #cd ~
 #wget http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -O apache-maven-3.3.3-bin.tar.gz
 #tar xvfz apache-maven-3.3.3-bin.tar.gz -C ~/Apps/
-#chown -R stefan:stefan ~/Apps/apache-maven-3.3.3/
+#chown -R $OSUSER:$OSUSER ~/Apps/apache-maven-3.3.3/
 #chmod +rx -R ~/Apps/apache-maven-3.3.3/
-#echo "export PATH=$PATH:/home/stefan/Apps/apache-maven-3.3.3/bin" >> /home/stefan/.bashrc
+#echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin" >> /home/$OSUSER/.bashrc
 #cd ~
+
+# Geoscript p1: add /bin to $PATH before the GVM stuff
+#echo "export PATH=$PATH:/home/$OSUSER/Apps/geoscript-groovy/bin" >> /home/$OSUSER/.bashrc
 
 # GVM
 #cd ~
 #curl -s get.gvmtool.net | bash
-#source "/home/stefan/.gvm/bin/gvm-init.sh"
-#chown -R stefan:stefan ~/.gvm
+source "/home/$OSUSER/.gvm/bin/gvm-init.sh"
+#chown -R $OSUSER:$OSUSER ~/.gvm
 #echo "gvm_auto_answer=true" >> ~/.gvm/etc/config
 #cd ~
 
@@ -152,6 +161,53 @@
 #gvm install gradle
 
 # Geoscript
+#git clone git://github.com/jericks/geoscript-groovy.git ~/sources/geoscript-groovy
+#cd ~/sources/geoscript-groovy/
+#PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin mvn clean install -DskipTests
+#mkdir ~/Apps/geoscript-groovy/
+#cp -r ~/sources/geoscript-groovy/target/geoscript-groovy-1.6-SNAPSHOT-app/geoscript-groovy-1.6-SNAPSHOT/* ~/Apps/geoscript-groovy/
+#chown $OSUSER:$OSUSER -R ~/Apps/geoscript-groovy/
+#chmod +rx -R ~/Apps/geoscript-groovy/
+#cd ~
+
+# Create some database roles, create a database and install postgis extension
+#sudo -u postgres psql -d postgres -c "CREATE ROLE $DBADMIN CREATEDB LOGIN PASSWORD '$DBADMINPWD';"
+#sudo -u postgres psql -d postgres -c "CREATE ROLE $DBUSR LOGIN PASSWORD '$DBPWD';"
+#sudo -u postgres dropdb $DBNAME
+#sudo -u postgres createdb --owner $DBADMIN $DBNAME
+#sudo -u postgres psql -d $DBNAME -c "CREATE EXTENSION postgis;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT ALL ON SCHEMA public TO $DBADMIN;"
+#sudo -u postgres psql -d $DBNAME -c "ALTER TABLE geometry_columns OWNER TO $DBADMIN;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT ALL ON geometry_columns TO $DBADMIN;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT ALL ON spatial_ref_sys TO $DBADMIN;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT ALL ON geography_columns TO $DBADMIN;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT ALL ON raster_columns TO $DBADMIN;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT ALL ON raster_overviews TO $DBADMIN;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON geometry_columns TO $DBUSR;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON spatial_ref_sys TO $DBUSR;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON geography_columns TO $DBUSR;"
+#sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON raster_columns TO $DBUSR;"
+
+# ili2pg
+#cd ~
+#wget http://www.eisenhutinformatik.ch/tmp/ili2pg-2.1.6.zip -O ili2pg-2.1.6.zip
+#unzip -d ~/Apps/ ili2pg-2.1.6.zip
+#chown $OSUSER:$OSUSER -R ~/Apps/ili2pg-2.1.6/
+#cd ~
+
+#cd ~
+#wget http://www.catais.org/geodaten/ch/so/agi/av/dm01avch24d/itf/lv03/ch_252400.itf -O ch_252400.itf
+#java -jar ~/Apps/ili2pg-2.1.6/ili2pg.jar --import --dbhost localhost --dbport 5432 --dbdatabase $DBNAME --dbschema ch_252400 --dbusr $DBADMIN --dbpwd $DBADMINPWD --modeldir http://models.geo.admin.ch --models DM01AVCH24D --createEnumTxtCol --nameByTopic --sqlEnableNull --createGeomIdx ~/ch_252400.itf
+#cd ~
+
+# Fonts...
+#cd ~
+#wget https://www.dropbox.com/s/e4ont2k6onxb018/Cadastra.zip?dl=0 -O Cadastra.zip
+#unzip -d /usr/share/fonts/truetype/ Cadastra.zip
+#wget https://www.dropbox.com/s/m24rz3cmwvfsqg1/Frutiger.zip?dl=0 -O Frutiger.zip
+#unzip -d /usr/share/fonts/truetype/ Frutiger.zip
+#fc-cache -f -v
+#cd ~
 
 
 # Eclipse
@@ -161,8 +217,5 @@
 #tar xvfz eclipse-jee-mars-R-linux-gtk-x86_64.tar.gz ~/Apps/
 #cd ~
 
-# Fonts...
 
 
-
-# eclipse...
