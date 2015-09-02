@@ -58,13 +58,13 @@ apt-get --yes install python-psycopg2
 
 
 # PDAL (w/ all dependencies)
-apt-get install --yes autoconf build-essential cmake docbook-mathml docbook-xsl libboost-dev libboost-all-dev libboost-filesystem-dev libboost-timer-dev libcgal-dev libcunit1-dev libgdal-dev libgeos++-dev libgeotiff-dev libgmp-dev libjson0-dev libjson-c-dev liblas-dev libmpfr-dev libopenscenegraph-dev libpq-dev libproj-dev libxml2-dev postgresql-server-dev-9.3 xsltproc git build-essential wget
-wget https://github.com/LASzip/LASzip/releases/download/v2.2.0/laszip-src-2.2.0.tar.gz
-tar xvfz laszip-src-2.2.0.tar.gz -C ~/sources/
-cd ~/sources/laszip-src-2.2.0/
-./configure
-make 
-make install
+#apt-get install --yes autoconf build-essential cmake docbook-mathml docbook-xsl libboost-dev libboost-all-dev libboost-filesystem-dev libboost-timer-dev libcgal-dev libcunit1-dev libgdal-dev libgeos++-dev libgeotiff-dev libgmp-dev libjson0-dev libjson-c-dev liblas-dev libmpfr-dev libopenscenegraph-dev libpq-dev libproj-dev libxml2-dev postgresql-server-dev-9.3 xsltproc git build-essential wget
+#wget https://github.com/LASzip/LASzip/releases/download/v2.2.0/laszip-src-2.2.0.tar.gz
+#tar xvfz laszip-src-2.2.0.tar.gz -C ~/sources/
+#cd ~/sources/laszip-src-2.2.0/
+#./configure
+#make 
+#make install
 
 
 #cmake .. -DCMAKE_INSTALL_PREFIX=/usr/local/laszip -DCMAKE_INSTALL_RPATH=/usr/local/laszip/lib
