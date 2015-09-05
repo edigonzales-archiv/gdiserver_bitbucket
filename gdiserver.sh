@@ -42,13 +42,13 @@ DBNAME="xanadu2"
 #echo "4149,CH1903,6149,CH1903,6149,9122,7004,8901,1,0,6422,1766,1,9603,674.374,15.056,405.346,,,," >> /usr/share/gdal/$gdalversion/gcs.override.csv
 
 #git clone https://github.com/qgis/QGIS.git ~/sources/qgis_master
-#mkdir ~/sources/qgis_master/build
-#cd ~/sources/qgis_master/build
-#cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON
-#make -j2
-#make install
-#cd ~
-#/usr/local/qgis_master/lib/qgis/crssync
+mkdir ~/sources/qgis_master/build
+cd ~/sources/qgis_master/build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON
+make -j2
+make install
+cd ~
+/usr/local/qgis_master/lib/qgis/crssync
 
 # Install some additional stuff
 #apt-get --yes install vim
@@ -56,6 +56,7 @@ DBNAME="xanadu2"
 #apt-get --yes install geany
 #apt-get --yes install qt4-designer qt4-qtconfig python-qt4-sql libqt4-sql-psql qt4-dev-tools
 #apt-get --yes install python-psycopg2
+#apt-get --yes install x2goclient
 
 # PDAL (w/ all its dependencies)
 # laszip
@@ -147,7 +148,7 @@ DBNAME="xanadu2"
 # GVM
 #cd ~
 #curl -s get.gvmtool.net | bash
-source "/home/$OSUSER/.gvm/bin/gvm-init.sh"
+#source "/home/$OSUSER/.gvm/bin/gvm-init.sh"
 #chown -R $OSUSER:$OSUSER ~/.gvm
 #echo "gvm_auto_answer=true" >> ~/.gvm/etc/config
 #cd ~
