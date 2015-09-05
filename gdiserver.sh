@@ -22,6 +22,7 @@ DBNAME="xanadu2"
 # Create a source and apps directory.
 #mkdir ~/sources
 #mkdir ~/Apps
+#chown -R $OSUSER:$OSUSER Apps/
 
 # Install and configure PostGIS
 #apt-get --yes install postgis postgresql-9.3-postgis-2.1
@@ -133,17 +134,14 @@ cd ~
 #_POSIX2_VERSION=199209 sh ./jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin >/dev/null < <(echo y) >/dev/null < <(echo y)
 #cd ~
 
-# Maven
+# Maven (add also Geoscript bin to path)
 #cd ~
 #wget http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -O apache-maven-3.3.3-bin.tar.gz
 #tar xvfz apache-maven-3.3.3-bin.tar.gz -C ~/Apps/
 #chown -R $OSUSER:$OSUSER ~/Apps/apache-maven-3.3.3/
 #chmod +rx -R ~/Apps/apache-maven-3.3.3/
-#echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin" >> /home/$OSUSER/.bashrc
+#echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin:/home/$OSUSER/Apps/geoscript-groovy/bin" >> /home/$OSUSER/.bashrc
 #cd ~
-
-# Geoscript p1: add /bin to $PATH before the GVM stuff
-#echo "export PATH=$PATH:/home/$OSUSER/Apps/geoscript-groovy/bin" >> /home/$OSUSER/.bashrc
 
 # GVM
 #cd ~
