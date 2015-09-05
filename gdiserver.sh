@@ -58,6 +58,7 @@ cd ~
 #apt-get --yes install qt4-designer qt4-qtconfig python-qt4-sql libqt4-sql-psql qt4-dev-tools
 #apt-get --yes install python-psycopg2
 #apt-get --yes install x2goclient
+#apt-get --yes install sshfs
 
 # PDAL (w/ all its dependencies)
 # laszip
