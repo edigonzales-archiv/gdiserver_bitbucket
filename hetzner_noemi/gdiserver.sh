@@ -14,6 +14,7 @@ apt-get update
 apt-get --yes dist-upgrade
 
 # xfce
+add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
 apt-get --yes install xubuntu-desktop
 
 # Add ubuntugis-unstable apt repository and keys
@@ -40,6 +41,7 @@ cd ~
 apt-get --yes install proj-bin zip curl
 wget http://www.swisstopo.admin.ch/internet/swisstopo/de/home/products/software/software.parsys.7090.downloadList.55545.DownloadFile.tmp/chenyx06ntv2.zip -O chenyx06ntv2.zip
 unzip -d /usr/share/proj/ chenyx06ntv2.zip CHENYX06a.gsb
+chmod 644 /usr/share/proj/CHENYX06a.gsb
 
 apt-get --yes install gdal-bin
 gdalversion=`gdalinfo --version | awk -F ' '  '{ print $2 }' | awk -F . '{ print $1 "." $2 }'`
