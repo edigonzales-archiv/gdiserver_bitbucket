@@ -216,9 +216,9 @@ cd ~
 apt-get --yes install software-properties-common
 add-apt-repository --yes ppa:x2go/stable
 apt-get update
-apt-get install x2goserver x2goserver-xsession
+apt-get --yes install x2goserver x2goserver-xsession
 
 # ftp server
 # change some config stuff programmatically!?
 # https://wiki.ubuntuusers.de/vsftpd
-apt-get install vsftpd 
+apt-get --yes install vsftpd 
