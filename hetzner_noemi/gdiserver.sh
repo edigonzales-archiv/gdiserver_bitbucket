@@ -12,6 +12,7 @@ DBNAME="xanadu2"
 # Update system
 apt-get update
 apt-get --yes dist-upgrade
+apt-get --yes install language-pack-de
 
 # xfce
 add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
@@ -223,4 +224,5 @@ apt-get --yes install x2goserver x2goserver-xsession
 # ftp server
 # change some config stuff programmatically!?
 # https://wiki.ubuntuusers.de/vsftpd
+# only adjust one: write_enable=YES
 apt-get --yes install vsftpd 
