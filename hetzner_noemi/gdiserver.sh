@@ -65,6 +65,7 @@ apt-get --yes install qt4-designer qt4-qtconfig python-qt4-sql libqt4-sql-psql q
 apt-get --yes install python-psycopg2
 apt-get --yes install x2goclient
 apt-get --yes install sshfs
+apt-get --yes install imagemagick
 
 # PDAL (w/ all its dependencies)
 # laszip

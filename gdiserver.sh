@@ -59,6 +59,7 @@ cd ~
 #apt-get --yes install python-psycopg2
 #apt-get --yes install x2goclient
 #apt-get --yes install sshfs
+#apt-get --yes install imagemagick
 
 # PDAL (w/ all its dependencies)
 # laszip
