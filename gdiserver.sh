@@ -30,7 +30,7 @@ DBNAME="xanadu2"
 
 # Compile and install QGIS Master
 #apt-get --yes build-dep qgis
-#apt-get --yes install libqscintilla2-dev cmake-curses-gui cmake-qt-gui gdal-bin python-gdal python-qscintilla2 git
+#apt-get --yes install libqca2-dev libqca2-plugin-ossl libqscintilla2-dev cmake-curses-gui cmake-qt-gui gdal-bin python-gdal python-qscintilla2 git
 
 # Download NTv2 grids and copy to /usr/share/proj/
 #cd ~
