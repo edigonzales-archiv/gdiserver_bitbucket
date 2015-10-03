@@ -1,0 +1,16 @@
+LDFLAGS="-Wl,-rpath=/usr/local/gdal_master/lib" cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_enterprise_1306b -DCMAKE_INSTALL_RPATH=/usr/local/qgis_enterprise_1306b/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF  -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7.so -DGDAL_CONFIG=/usr/local/gdal_master/bin/gdal-config -DGDAL_INCLUDE_DIR=/usr/local/gdal_master/include -DGDAL_LIBRARY=/usr/local/gdal_master/lib/libgdal.so
+
+stefan@inflexible:~/sources/gdal_master/gdal$ ./configure --prefix=/usr/local/gdal_master/ --with-spatialite=yes --with-sqlite=yes --with-python=yes
+
+
+LDFLAGE notwendig. geht nämlich nicht ohne:
+
+$ sudo echo /usr/local/gdal_master/lib >> /etc/ld.so.conf
+$ sudo ldconfig
+
+
+
+
+st_fineltra
+
+sudo apt-get install liblwgeom-dev
