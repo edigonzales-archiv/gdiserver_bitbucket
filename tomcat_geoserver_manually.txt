@@ -1,0 +1,25 @@
+# adjust catalina.sh manually
+
+# first lines
+export MALLOC_CHECK_=0
+JAVA_OPTS="-Djava.awt.headless=true"
+JAVA_OPTS="$JAVA_OPTS -server "
+JAVA_OPTS="$JAVA_OPTS -XX:SoftRefLRUPolicyMSPerMB=36000 "
+JAVA_OPTS="$JAVA_OPTS -XX:PermSize=128m "
+JAVA_OPTS="$JAVA_OPTS -Xms256m -Xmx2048m "
+JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize=256m "
+JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC "
+JAVA_OPTS="$JAVA_OPTS -XX:+CMSClassUnloadingEnabled "
+
+# approx. line 155
+# Set PID file (sz / 2015-12-19)
+CATALINA_PID="$CATALINA_BASE/bin/catalina.pid"
+
+# watchdog
+# copy tomcat_geoserver/watchdog.sh to /home/stefan/Apps/geoserver/watchdog.sh
+
+# cronjob
+*/10 * * * * /home/stefan/Apps/geoserver/watchdog.sh
+
+
+

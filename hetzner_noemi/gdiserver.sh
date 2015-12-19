@@ -35,7 +35,8 @@ apt-get --yes install pgadmin3
 
 # Compile and install QGIS Master
 apt-get --yes build-dep qgis
-apt-get --yes install libqscintilla2-dev cmake-curses-gui cmake-qt-gui gdal-bin python-gdal python-qscintilla2 git
+apt-get --yes install libqca2-dev libqca2-plugin-ossl libqscintilla2-dev cmake-curses-gui cmake-qt-gui gdal-bin python-gdal python-qscintilla2 git
+
 
 # Download NTv2 grids and copy to /usr/share/proj/
 cd ~
@@ -51,7 +52,8 @@ echo "4149,CH1903,6149,CH1903,6149,9122,7004,8901,1,0,6422,1766,1,9603,674.374,1
 git clone https://github.com/qgis/QGIS.git ~/sources/qgis_master
 mkdir ~/sources/qgis_master/build
 cd ~/sources/qgis_master/build
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON
+#cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON -DGDAL_CONFIG=/usr/local/gdal_master/bin/gdal-config -DGDAL_INCLUDE_DIR=/usr/local/gdal_master/include -DGDAL_LIBRARY=/usr/local/gdal_master/lib/libgdal.so -DWITH_INTERNAL_QWTPOLAR=ON
 make -j2
 make install
 cd ~
