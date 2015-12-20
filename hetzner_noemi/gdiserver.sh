@@ -17,6 +17,7 @@ apt-get --yes install language-pack-de
 # xfce
 add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
 apt-get --yes install xubuntu-desktop
+apt-get --yes install xfce4 xfce4-goodies xfce4-artwork xubuntu-icon-theme
 
 # Add ubuntugis-unstable apt repository and keys
 # Port 80 b/c of firewall.
@@ -268,3 +269,5 @@ tar xvf apache-tomcat-8.0.30.tar.gz -C /usr/local/
 chown stefan:stefan -R /usr/local/apache-tomcat-8.0.30
 ln -s /usr/local/apache-tomcat-8.0.30 /usr/local/apache-tomcat-8
 
+# Owner
+sudo chown -R $USER $HOME
