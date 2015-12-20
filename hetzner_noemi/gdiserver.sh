@@ -16,8 +16,10 @@ apt-get --yes install language-pack-de
 
 # xfce
 add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
+apt-get update
+apt-get dist-upgrade
 apt-get --yes install xubuntu-desktop
-apt-get --yes install xfce4 xfce4-goodies xfce4-artwork xubuntu-icon-theme
+apt-get --yes install xfce4-goodies xfce4-artwork xubuntu-icon-theme
 
 # Add ubuntugis-unstable apt repository and keys
 # Port 80 b/c of firewall.
