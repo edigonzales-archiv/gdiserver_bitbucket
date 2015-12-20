@@ -49,12 +49,24 @@ apt-get --yes install gdal-bin
 gdalversion=`gdalinfo --version | awk -F ' '  '{ print $2 }' | awk -F . '{ print $1 "." $2 }'`
 echo "4149,CH1903,6149,CH1903,6149,9122,7004,8901,1,0,6422,1766,1,9603,674.374,15.056,405.346,,,," >> /usr/share/gdal/$gdalversion/gcs.override.csv
 
+# GDAL/OGR develop
+cd ~
+mkdir /usr/local/gdal_master/
+git clone https://github.com/OSGeo/gdal.git ~/sources/gdal_master
+cd ~/sources/gdal_master/gdal
+./configure --prefix=/usr/local/gdal_master/ --with-spatialite=yes --with-sqlite=yes --with-python=yes
+make install
+
+sudo sh -c "echo '/usr/local/gdal_master/lib' >> /etc/ld.so.conf"
+sudo ldconfig
+
+# QGIS
 git clone https://github.com/qgis/QGIS.git ~/sources/qgis_master
 mkdir ~/sources/qgis_master/build
 cd ~/sources/qgis_master/build
 #cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON
 cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_master -DCMAKE_INSTALL_RPATH=/usr/local/qgis_master/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON -DGDAL_CONFIG=/usr/local/gdal_master/bin/gdal-config -DGDAL_INCLUDE_DIR=/usr/local/gdal_master/include -DGDAL_LIBRARY=/usr/local/gdal_master/lib/libgdal.so -DWITH_INTERNAL_QWTPOLAR=ON
-make -j2
+make -j6
 make install
 cd ~
 /usr/local/qgis_master/lib/qgis/crssync
@@ -145,39 +157,39 @@ _POSIX2_VERSION=199209 sh ./jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin >/dev/
 cd ~
 
 # Maven (add also Geoscript bin to path)
-cd ~
-wget http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -O apache-maven-3.3.3-bin.tar.gz
-tar xvfz apache-maven-3.3.3-bin.tar.gz -C ~/Apps/
-chown -R $OSUSER:$OSUSER ~/Apps/apache-maven-3.3.3/
-chmod +rx -R ~/Apps/apache-maven-3.3.3/
-echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin:/home/$OSUSER/Apps/geoscript-groovy/bin" >> /home/$OSUSER/.bashrc
-cd ~
+#cd ~
+#wget http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -O apache-maven-3.3.3-bin.tar.gz
+#tar xvfz apache-maven-3.3.3-bin.tar.gz -C ~/Apps/
+#chown -R $OSUSER:$OSUSER ~/Apps/apache-maven-3.3.3/
+#chmod +rx -R ~/Apps/apache-maven-3.3.3/
+#echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin:/home/$OSUSER/Apps/geoscript-groovy/bin" >> /home/$OSUSER/.bashrc
+#cd ~
 
 # GVM
-cd ~
-curl -s get.gvmtool.net | bash
-source "/home/$OSUSER/.gvm/bin/gvm-init.sh"
-chown -R $OSUSER:$OSUSER ~/.gvm
-echo "gvm_auto_answer=true" >> ~/.gvm/etc/config
-cd ~
+#cd ~
+#curl -s get.gvmtool.net | bash
+#source "/home/$OSUSER/.gvm/bin/gvm-init.sh"
+#chown -R $OSUSER:$OSUSER ~/.gvm
+#echo "gvm_auto_answer=true" >> ~/.gvm/etc/config
+#cd ~
 
 # Groovy
-cd ~
-gvm install groovy
+#cd ~
+#gvm install groovy
 
 # Gradle
-cd ~
-gvm install gradle
+#cd ~
+#gvm install gradle
 
 # Geoscript
-git clone git://github.com/jericks/geoscript-groovy.git ~/sources/geoscript-groovy
-cd ~/sources/geoscript-groovy/
-PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin mvn clean install -DskipTests
-mkdir ~/Apps/geoscript-groovy/
-cp -r ~/sources/geoscript-groovy/target/geoscript-groovy-1.6-SNAPSHOT-app/geoscript-groovy-1.6-SNAPSHOT/* ~/Apps/geoscript-groovy/
-chown $OSUSER:$OSUSER -R ~/Apps/geoscript-groovy/
-chmod +rx -R ~/Apps/geoscript-groovy/
-cd ~
+#git clone git://github.com/jericks/geoscript-groovy.git ~/sources/geoscript-groovy
+#cd ~/sources/geoscript-groovy/
+#PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin mvn clean install -DskipTests
+#mkdir ~/Apps/geoscript-groovy/
+#cp -r ~/sources/geoscript-groovy/target/geoscript-groovy-1.6-SNAPSHOT-app/geoscript-groovy-1.6-SNAPSHOT/* ~/Apps/geoscript-groovy/
+#chown $OSUSER:$OSUSER -R ~/Apps/geoscript-groovy/
+#chmod +rx -R ~/Apps/geoscript-groovy/
+#cd ~
 
 # Create some database roles, create a database and install postgis extension
 sudo -u postgres psql -d postgres -c "CREATE ROLE $DBADMIN CREATEDB LOGIN PASSWORD '$DBADMINPWD';"
@@ -197,11 +209,30 @@ sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON spatial_ref_sys TO $DBUSR;"
 sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON geography_columns TO $DBUSR;"
 sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON raster_columns TO $DBUSR;"
 
+# ST_Fineltra
+apt-get install liblwgeom-dev
+cd ~
+git clone https://github.com/strk/fineltra.git ~/sources/fineltra
+cd ~/sources/fineltra
+./autogen.sh
+./configure
+make install
+
+sudo -u postgres psql -d $DBNAME -c "CREATE EXTENSION fineltra;"
+sudo -u postgres psql -d $DBNAME -c "CREATE SCHEMA av_chenyx06 AUTHORIZATION $DBADMIN;"
+
+cd ~
+wget https://www.dropbox.com/s/63lm992uypbol3m/chenyx06.sqlite?dl=0 -O chenyx06.sqlite
+/usr/local/gdal_master/bin/ogr2ogr -f "PostgreSQL" PG:"dbname='$DBNAME' host='localhost' port='5432' user='$DBADMIN' password='$DBADMINPWD'" chenyx06.sqlite chenyx06 -lco SCHEMA=av_chenyx06 -nln chenyx06_triangles
+
+sudo -u postgres psql -d $DBNAME -c "GRANT USAGE ON SCHEMA av_chenyx06 TO $DBUSR;"
+sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON av_chenyx06.chenyx06_triangles TO $DBUSR;"
+
 # ili2pg
 cd ~
-wget http://www.eisenhutinformatik.ch/tmp/ili2pg-2.1.6.zip -O ili2pg-2.1.6.zip
-unzip -d ~/Apps/ ili2pg-2.1.6.zip
-chown $OSUSER:$OSUSER -R ~/Apps/ili2pg-2.1.6/
+wget http://www.eisenhutinformatik.ch/tmp/ili2pg-2.4.0.zip -O ili2pg-2.4.0.zip
+unzip -d ~/Apps/ ili2pg-2.4.0.zip
+chown $OSUSER:$OSUSER -R ~/Apps/ili2pg-2.4.0/
 cd ~
 
 #cd ~
@@ -229,3 +260,11 @@ apt-get --yes install x2goserver x2goserver-xsession
 # https://wiki.ubuntuusers.de/vsftpd
 # only adjust one: write_enable=YES
 apt-get --yes install vsftpd 
+
+# Apache Tomcat
+cd ~
+wget http://www.pirbot.com/mirrors/apache/tomcat/tomcat-8/v8.0.30/bin/apache-tomcat-8.0.30.tar.gz
+tar xvf apache-tomcat-8.0.30.tar.gz -C /usr/local/
+chown stefan:stefan -R /usr/local/apache-tomcat-8.0.30
+ln -s /usr/local/apache-tomcat-8.0.30 /usr/local/apache-tomcat-8
+
