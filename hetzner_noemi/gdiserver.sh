@@ -44,7 +44,8 @@ apt-get --yes install libqca2-dev libqca2-plugin-ossl libqscintilla2-dev cmake-c
 # Download NTv2 grids and copy to /usr/share/proj/
 cd ~
 apt-get --yes install proj-bin zip curl
-wget http://www.swisstopo.admin.ch/internet/swisstopo/de/home/products/software/software.parsys.7090.downloadList.55545.DownloadFile.tmp/chenyx06ntv2.zip -O chenyx06ntv2.zip
+#http://www.swisstopo.admin.ch/internet/swisstopo/en/home/products/software/products/chenyx06.parsys.00011.downloadList.70576.DownloadFile.tmp/chenyx06ntv2.zip
+wget https://www.dropbox.com/s/4uwil0xfcki8m8h/chenyx06ntv2.zip?dl=0 -O chenyx06ntv2.zip
 unzip -d /usr/share/proj/ chenyx06ntv2.zip CHENYX06a.gsb
 chmod 644 /usr/share/proj/CHENYX06a.gsb
 
@@ -73,6 +74,17 @@ make -j6
 make install
 cd ~
 /usr/local/qgis_master/lib/qgis/crssync
+
+wget https://github.com/qgis/QGIS/archive/final-2_8_5.tar.gz -O qgis_2_8_5.tar.gz
+tar xvf qgis_2_8_5.tar.gz -C ~/sources/
+mkdir ~/sources/QGIS-final-2_8_5/build
+cd ~/sources/QGIS-final-2_8_5/build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_2_8_5 -DCMAKE_INSTALL_RPATH=/usr/local/qgis_2_8_5/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON -DGDAL_CONFIG=/usr/local/gdal_master/bin/gdal-config -DGDAL_INCLUDE_DIR=/usr/local/gdal_master/include -DGDAL_LIBRARY=/usr/local/gdal_master/lib/libgdal.so -DWITH_INTERNAL_QWTPOLAR=ON
+make -j6
+make install
+cd ~
+/usr/local/qgis_2_8_5/lib/qgis/crssync
+
 
 # Install some additional stuff
 apt-get --yes install vim
@@ -233,14 +245,14 @@ sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON av_chenyx06.chenyx06_triang
 
 # ili2pg
 cd ~
-wget http://www.eisenhutinformatik.ch/tmp/ili2pg-2.4.0.zip -O ili2pg-2.4.0.zip
+wget http://www.eisenhutinformatik.ch/interlis/ili2pg/ili2pg-2.4.0.zip -O ili2pg-2.4.0.zip
 unzip -d ~/Apps/ ili2pg-2.4.0.zip
 chown $OSUSER:$OSUSER -R ~/Apps/ili2pg-2.4.0/
 cd ~
 
 #cd ~
 wget http://www.catais.org/geodaten/ch/so/agi/av/dm01avch24d/itf/lv03/ch_252400.itf -O ch_252400.itf
-java -jar ~/Apps/ili2pg-2.1.6/ili2pg.jar --import --dbhost localhost --dbport 5432 --dbdatabase $DBNAME --dbschema ch_252400 --dbusr $DBADMIN --dbpwd $DBADMINPWD --modeldir http://models.geo.admin.ch --models DM01AVCH24D --createEnumTxtCol --nameByTopic --sqlEnableNull --createGeomIdx ~/ch_252400.itf
+java -jar ~/Apps/ili2pg-2.4.0/ili2pg.jar --import --dbhost localhost --dbport 5432 --dbdatabase $DBNAME --dbschema ch_252400 --dbusr $DBADMIN --dbpwd $DBADMINPWD --modeldir http://models.geo.admin.ch --models DM01AVCH24D --createEnumTabs --nameByTopic --sqlEnableNull --createGeomIdx --createFkIdx ~/ch_252400.itf
 cd ~
 
 # Fonts...
@@ -249,8 +261,11 @@ wget https://www.dropbox.com/s/e4ont2k6onxb018/Cadastra.zip?dl=0 -O Cadastra.zip
 unzip -d /usr/share/fonts/truetype/ Cadastra.zip
 wget https://www.dropbox.com/s/m24rz3cmwvfsqg1/Frutiger.zip?dl=0 -O Frutiger.zip
 unzip -d /usr/share/fonts/truetype/ Frutiger.zip
+wget https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip -O Hack-v2_018-ttf.zip
+unzip -d /usr/share/fonts/truetype/ Hack-v2_018-ttf.zip
 fc-cache -f -v
 cd ~
+
 
 # x2go server
 apt-get --yes install software-properties-common
