@@ -14,6 +14,14 @@ apt-get update
 apt-get --yes dist-upgrade
 apt-get --yes install language-pack-de
 
+#####
+# Falls interaktive gefragt wird wegen GRUB:
+# - bestehender GRUB / Konfiguration verwenden
+# - installieren in sda/sdb
+# (Sind glaubs Empfehlungen und/oder Defaulteinstellungen)
+####
+
+
 # xfce
 add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
 apt-get update
