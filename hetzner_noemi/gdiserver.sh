@@ -10,10 +10,10 @@ DBNAME="xanadu2"
 
 
 # Update system
-apt-get update
-apt-get --yes dist-upgrade
-apt-get --yes install language-pack-de
-apt-get --yes install software-properties-common
+#apt-get update
+#apt-get --yes dist-upgrade
+#apt-get --yes install language-pack-de
+#apt-get --yes install software-properties-common
 
 #####
 # Falls interaktive gefragt wird wegen GRUB:
@@ -24,12 +24,14 @@ apt-get --yes install software-properties-common
 
 
 # xfce
-add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
-apt-get update
-apt-get --yes dist-upgrade
-apt-get --yes --no-install-recommends install xubuntu-desktop
-apt-get --yes install xfce4-goodies xfce4-artwork xubuntu-icon-theme
-apt-get --yes dist-upgrade
+#add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
+#apt-get update
+#apt-get --yes dist-upgrade
+#apt-get --yes --no-install-recommends install xubuntu-desktop
+##apt-get --yes install xfce4-goodies xfce4-artwork xubuntu-icon-theme
+#apt-get --yes install xfce4-whiskermenu-plugin gnome-icon-theme-full tango-icon-theme
+#apt-get install fonts-liberation
+#apt-get --yes dist-upgrade
 
 # Add ubuntugis-unstable apt repository and keys
 # Port 80 b/c of firewall.
@@ -278,10 +280,10 @@ cd ~
 
 
 # x2go server
-apt-get --yes install software-properties-common
-add-apt-repository --yes ppa:x2go/stable
-apt-get update
-apt-get --yes install x2goserver x2goserver-xsession
+#apt-get --yes install software-properties-common
+#add-apt-repository --yes ppa:x2go/stable
+#apt-get update
+#apt-get --yes install x2goserver x2goserver-xsession
 
 # ftp server
 # change some config stuff programmatically!?
