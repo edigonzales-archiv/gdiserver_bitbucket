@@ -314,6 +314,7 @@ tar xvf apache-tomcat-8.0.30.tar.gz -C /usr/local/
 chown stefan:stefan -R /usr/local/apache-tomcat-8.0.30
 ln -s /usr/local/apache-tomcat-8.0.30 /usr/local/apache-tomcat-8
 
+# broken...
 # Owner
-cd ~
-sudo chown -R $USER $HOME
+#cd ~
+#sudo chown -R $USER $HOME
