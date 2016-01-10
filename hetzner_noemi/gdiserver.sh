@@ -35,9 +35,9 @@ DBNAME="xanadu2"
 
 # Add ubuntugis-unstable apt repository and keys
 # Port 80 b/c of firewall.
-add-apt-repository --yes ppa:ubuntugis/ubuntugis-unstable
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80/ --recv-key 314DF160
-apt-get update
+#add-apt-repository --yes ppa:ubuntugis/ubuntugis-unstable
+#apt-key adv --keyserver hkp://keyserver.ubuntu.com:80/ --recv-key 314DF160
+#apt-get update
 
 # Create a source and apps directory.
 mkdir ~/sources
@@ -76,6 +76,8 @@ make install
 sudo sh -c "echo '/usr/local/gdal_master/lib' >> /etc/ld.so.conf"
 sudo ldconfig
 
+echo "4149,CH1903,6149,CH1903,6149,9122,7004,8901,1,0,6422,1766,1,9603,674.374,15.056,405.346,,,," >> /usr/local/gdal_master/share/gdal/gcs.override.csv
+
 # QGIS
 git clone https://github.com/qgis/QGIS.git ~/sources/qgis_master
 mkdir ~/sources/qgis_master/build
@@ -97,6 +99,15 @@ make install
 cd ~
 /usr/local/qgis_2_8_5/lib/qgis/crssync
 
+wget https://github.com/qgis/QGIS/archive/final-2_12_2.tar.gz -O qgis_2_12_2.tar.gz
+tar xvf qgis_2_12_2.tar.gz -C ~/sources/
+mkdir ~/sources/QGIS-final-2_12_2/build
+cd ~/sources/QGIS-final-2_12_2/build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_2_12_2 -DCMAKE_INSTALL_RPATH=/usr/local/qgis_2_12_2/lib -DENABLE_TESTS=OFF -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON -DGDAL_CONFIG=/usr/local/gdal_master/bin/gdal-config -DGDAL_INCLUDE_DIR=/usr/local/gdal_master/include -DGDAL_LIBRARY=/usr/local/gdal_master/lib/libgdal.so -DWITH_INTERNAL_QWTPOLAR=ON
+make -j6
+make install
+cd ~
+/usr/local/qgis_2_12_2/lib/qgis/crssync
 
 # Install some additional stuff
 apt-get --yes install vim
@@ -107,6 +118,7 @@ apt-get --yes install python-psycopg2
 apt-get --yes install x2goclient
 apt-get --yes install sshfs
 apt-get --yes install imagemagick
+apt-get --yes install filezilla
 
 # PDAL (w/ all its dependencies)
 # laszip
@@ -184,13 +196,14 @@ _POSIX2_VERSION=199209 sh ./jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin >/dev/
 cd ~
 
 # Maven (add also Geoscript bin to path)
-#cd ~
-#wget http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -O apache-maven-3.3.3-bin.tar.gz
-#tar xvfz apache-maven-3.3.3-bin.tar.gz -C ~/Apps/
-#chown -R $OSUSER:$OSUSER ~/Apps/apache-maven-3.3.3/
-#chmod +rx -R ~/Apps/apache-maven-3.3.3/
+cd ~
+wget http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -O apache-maven-3.3.3-bin.tar.gz
+tar xvfz apache-maven-3.3.3-bin.tar.gz -C ~/Apps/
+chown -R $OSUSER:$OSUSER ~/Apps/apache-maven-3.3.3/
+chmod +rx -R ~/Apps/apache-maven-3.3.3/
 #echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin:/home/$OSUSER/Apps/geoscript-groovy/bin" >> /home/$OSUSER/.bashrc
-#cd ~
+echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin" >> /home/$OSUSER/.bashrc
+cd ~
 
 # GVM
 #cd ~
@@ -256,16 +269,16 @@ sudo -u postgres psql -d $DBNAME -c "GRANT USAGE ON SCHEMA av_chenyx06 TO $DBUSR
 sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON av_chenyx06.chenyx06_triangles TO $DBUSR;"
 
 # ili2pg
-cd ~
-wget http://www.eisenhutinformatik.ch/interlis/ili2pg/ili2pg-2.4.0.zip -O ili2pg-2.4.0.zip
-unzip -d ~/Apps/ ili2pg-2.4.0.zip
-chown $OSUSER:$OSUSER -R ~/Apps/ili2pg-2.4.0/
-cd ~
+#cd ~
+#wget http://www.eisenhutinformatik.ch/interlis/ili2pg/ili2pg-2.4.0.zip -O ili2pg-2.4.0.zip
+#unzip -d ~/Apps/ ili2pg-2.4.0.zip
+#chown $OSUSER:$OSUSER -R ~/Apps/ili2pg-2.4.0/
+#cd ~
 
 #cd ~
-wget http://www.catais.org/geodaten/ch/so/agi/av/dm01avch24d/itf/lv03/ch_252400.itf -O ch_252400.itf
-java -jar ~/Apps/ili2pg-2.4.0/ili2pg.jar --import --dbhost localhost --dbport 5432 --dbdatabase $DBNAME --dbschema ch_252400 --dbusr $DBADMIN --dbpwd $DBADMINPWD --modeldir http://models.geo.admin.ch --models DM01AVCH24D --createEnumTabs --nameByTopic --sqlEnableNull --createGeomIdx --createFkIdx ~/ch_252400.itf
-cd ~
+#wget http://www.catais.org/geodaten/ch/so/agi/av/dm01avch24d/itf/lv03/ch_252400.itf -O ch_252400.itf
+#java -jar ~/Apps/ili2pg-2.4.0/ili2pg.jar --import --dbhost localhost --dbport 5432 --dbdatabase $DBNAME --dbschema ch_252400 --dbusr $DBADMIN --dbpwd $DBADMINPWD --modeldir http://models.geo.admin.ch --models DM01AVCH24D --createEnumTabs --nameByTopic --sqlEnableNull --createGeomIdx --createFkIdx ~/ch_252400.itf
+#cd ~
 
 # Fonts...
 cd ~
