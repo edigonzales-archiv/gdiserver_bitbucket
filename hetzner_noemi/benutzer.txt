@@ -1,0 +1,15 @@
+adduser bjsvwrud
+adduser bjsvwlue
+adduser bjsvwstu
+adduser opengis
+
+groupadd agi
+
+adduser bjsvwrud agi
+adduser bjsvwlue agi
+adduser bjsvwstu agi
+
+mkdir Bezugsrahmenwechsel 
+chmod 2777 Bezugsrahmenwechsel
+chmod -R 777 Bezugsrahmenwechsel
+chown -R root:agi Bezugsrahmenwechsel
