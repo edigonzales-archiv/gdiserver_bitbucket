@@ -13,6 +13,7 @@ DBNAME="xanadu2"
 apt-get update
 apt-get --yes dist-upgrade
 apt-get --yes install language-pack-de
+apt-get --yes install software-properties-common
 
 #####
 # Falls interaktive gefragt wird wegen GRUB:
@@ -25,8 +26,8 @@ apt-get --yes install language-pack-de
 # xfce
 add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
 apt-get update
-apt-get dist-upgrade
-apt-get --yes install xubuntu-desktop
+apt-get --yes dist-upgrade
+apt-get --yes  --no-install-recommends install xubuntu-desktop
 apt-get --yes install xfce4-goodies xfce4-artwork xubuntu-icon-theme
 
 # Add ubuntugis-unstable apt repository and keys
@@ -295,4 +296,5 @@ chown stefan:stefan -R /usr/local/apache-tomcat-8.0.30
 ln -s /usr/local/apache-tomcat-8.0.30 /usr/local/apache-tomcat-8
 
 # Owner
+cd ~
 sudo chown -R $USER $HOME
