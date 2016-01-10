@@ -27,8 +27,9 @@ apt-get --yes install software-properties-common
 add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
 apt-get update
 apt-get --yes dist-upgrade
-apt-get --yes  --no-install-recommends install xubuntu-desktop
+apt-get --yes --no-install-recommends install xubuntu-desktop
 apt-get --yes install xfce4-goodies xfce4-artwork xubuntu-icon-theme
+apt-get --yes dist-upgrade
 
 # Add ubuntugis-unstable apt repository and keys
 # Port 80 b/c of firewall.
