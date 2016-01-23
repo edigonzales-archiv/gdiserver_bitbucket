@@ -1,15 +1,15 @@
-adduser bjsvwrud
-adduser bjsvwlue
-adduser bjsvwstu
-adduser opengis
+sudo adduser --gecos "" bjsvwrud
+sudo adduser --gecos "" bjsvwlue
+sudo adduser --gecos "" barpastu
+sudo adduser --gecos "" opengis
 
-groupadd agi
+sudo  groupadd agi
 
-adduser bjsvwrud agi
-adduser bjsvwlue agi
-adduser bjsvwstu agi
+sudo adduser bjsvwrud agi
+sudo adduser bjsvwlue agi
+sudo adduser barpastu agi
 
-mkdir Bezugsrahmenwechsel 
-chmod 2777 Bezugsrahmenwechsel
-chmod -R 777 Bezugsrahmenwechsel
-chown -R root:agi Bezugsrahmenwechsel
+sudo mkdir Bezugsrahmenwechsel 
+sudo chmod 2777 Bezugsrahmenwechsel
+sudo chmod -R 777 Bezugsrahmenwechsel
+sudo chown -R root:agi Bezugsrahmenwechsel

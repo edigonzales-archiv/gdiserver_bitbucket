@@ -28,7 +28,7 @@ DBNAME="xanadu2"
 #apt-get update
 #apt-get --yes dist-upgrade
 #apt-get --yes --no-install-recommends install xubuntu-desktop
-##apt-get --yes install xfce4-goodies xfce4-artwork xubuntu-icon-theme
+#apt-get --yes install xfce4-goodies xfce4-artwork xubuntu-icon-theme
 #apt-get --yes install xfce4-whiskermenu-plugin gnome-icon-theme-full tango-icon-theme
 #apt-get --yes install fonts-liberation
 #apt-get --yes xcursor-themes
