@@ -12,17 +12,6 @@
  ServerSignature On
  #Options Indexes FollowSymLinks MultiViews
 
- ProxyPreserveHost On
- ProxyVia full
-
- <proxy>
-   Order deny,allow
-   Allow from all
- </proxy>
-
- ProxyPass /groovy/ http://85.25.185.233:8080/groovy/
- ProxyPassReverse /groovy/ http://85.25.185.233:8080/groovy/
-
  <Directory /home/sogeo/sogeo.services/docroot>
   Options Indexes FollowSymLinks MultiViews
   AllowOverride None

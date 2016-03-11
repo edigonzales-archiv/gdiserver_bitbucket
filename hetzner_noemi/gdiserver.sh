@@ -168,10 +168,16 @@ make install
 cd ~
 
 # pdal
+
+#sudo add-apt-repository ppa:v-launchpad-jochen-sprickerhof-de/pcl
+#sudo apt-get update
+#sudo apt-get install libpcl-all
+
+
 git clone https://github.com/PDAL/PDAL.git ~/sources/pdal
 mkdir ~/sources/pdal/build
 cd ~/sources/pdal/build
-cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_PLUGIN_HEXBIN=ON -DBUILD_PLUGIN_P2G=ON -DBUILD_PLUGIN_PGPOINTCLOUD=ON -DBUILD_PLUGIN_PYTHON=ON -DBUILD_PLUGIN_SQLITE=ON -DWITH_APPS=ON -DWITH_GEOTIFF=ON -DWITH_LASZIP=ON
+cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_PLUGIN_PCL=ON -DBUILD_PLUGIN_HEXBIN=ON -DBUILD_PLUGIN_P2G=ON -DBUILD_PLUGIN_PGPOINTCLOUD=ON -DBUILD_PLUGIN_PYTHON=ON -DBUILD_PLUGIN_SQLITE=ON -DWITH_APPS=ON -DWITH_GEOTIFF=ON -DWITH_LASZIP=ON -DWITH_COMPLETION=ON
 make -j2
 make install
 cd ~

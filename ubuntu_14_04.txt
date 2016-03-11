@@ -21,6 +21,8 @@ a2ensite sogeo.conf
 # reload apache
 service apache2 reload
 
+# reverse proxy
+sudo a2enmod proxy_http
 
 # Apache Tomcat
 cd ~
