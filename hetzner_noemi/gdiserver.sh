@@ -23,6 +23,9 @@ DBNAME="xanadu2"
 ####
 
 
+# SSH Server
+apt-get install openssh-server
+
 # xfce
 #add-apt-repository --yes ppa:xubuntu-dev/xfce-4.12
 #apt-get update
@@ -31,7 +34,7 @@ DBNAME="xanadu2"
 #apt-get --yes install xfce4-goodies xfce4-artwork xubuntu-icon-theme
 #apt-get --yes install xfce4-whiskermenu-plugin gnome-icon-theme-full tango-icon-theme
 #apt-get --yes install fonts-liberation
-#apt-get --yes xcursor-themes
+#apt-get --yes install xcursor-themes
 #apt-get --yes dist-upgrade
 
 # Add ubuntugis-unstable apt repository and keys
@@ -72,7 +75,7 @@ cd ~
 mkdir /usr/local/gdal_master/
 git clone https://github.com/OSGeo/gdal.git ~/sources/gdal_master
 cd ~/sources/gdal_master/gdal
-./configure --prefix=/usr/local/gdal_master/ --with-spatialite=yes --with-sqlite=yes --with-python=yes
+./configure --prefix=/usr/local/gdal_master/ --with-spatialite=yes --with-sqlite3=yes --with-python=yes
 make install
 
 sudo sh -c "echo '/usr/local/gdal_master/lib' >> /etc/ld.so.conf"
@@ -191,30 +194,36 @@ apt-get --yes install oracle-java8-installer
 
 # Install native JAI
 # Silent overwrite will not work.
+## TODO: Check if still works?
 cd ~
-wget https://www.dropbox.com/s/7mwcvtreipufy0u/jai-1_1_3-lib-linux-amd64-jdk.bin?dl=0 -O jai-1_1_3-lib-linux-amd64-jdk.bin
+wget https://www.dropbox.com/s/1ohubmhtgvo3i3v/jai-1_1_3-lib-linux-amd64-jdk.bin?dl=0 -O jai-1_1_3-lib-linux-amd64-jdk.bin
 cp jai-1_1_3-lib-linux-amd64-jdk.bin /usr/lib/jvm/java-8-oracle/
 cd /usr/lib/jvm/java-8-oracle/
 sh ./jai-1_1_3-lib-linux-amd64-jdk.bin >/dev/null < <(echo y) >/dev/null < <(echo y)
 cd ~
 
 #cd ~
-wget https://www.dropbox.com/s/arpsxaumi0f9hzp/jai_imageio-1_1-lib-linux-amd64-jdk.bin?dl=0 -O jai_imageio-1_1-lib-linux-amd64-jdk.bin
+wget https://www.dropbox.com/s/llk3pzsrbt7fu4z/jai_imageio-1_1-lib-linux-amd64-jdk.bin?dl=0 -O jai_imageio-1_1-lib-linux-amd64-jdk.bin
 sed s/+215/-n+215/ jai_imageio-1_1-lib-linux-amd64-jdk.bin > jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin
 cp jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin /usr/lib/jvm/java-8-oracle/
 cd /usr/lib/jvm/java-8-oracle/
 _POSIX2_VERSION=199209 sh ./jai_imageio-1_1-lib-linux-amd64-jdk-fixed.bin >/dev/null < <(echo y) >/dev/null < <(echo y)
 cd ~
 
+
+
+## ALLES MIT SDK (plus ant) 
+
+
 # Maven (add also Geoscript bin to path)
-cd ~
-wget http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -O apache-maven-3.3.3-bin.tar.gz
-tar xvfz apache-maven-3.3.3-bin.tar.gz -C ~/Apps/
-chown -R $OSUSER:$OSUSER ~/Apps/apache-maven-3.3.3/
-chmod +rx -R ~/Apps/apache-maven-3.3.3/
+#cd ~
+#wget http://mirror.switch.ch/mirror/apache/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz -O apache-maven-3.3.3-bin.tar.gz
+#tar xvfz apache-maven-3.3.3-bin.tar.gz -C ~/Apps/
+#chown -R $OSUSER:$OSUSER ~/Apps/apache-maven-3.3.3/
+#chmod +rx -R ~/Apps/apache-maven-3.3.3/
 #echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin:/home/$OSUSER/Apps/geoscript-groovy/bin" >> /home/$OSUSER/.bashrc
-echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin" >> /home/$OSUSER/.bashrc
-cd ~
+#echo "export PATH=$PATH:/home/$OSUSER/Apps/apache-maven-3.3.3/bin" >> /home/$OSUSER/.bashrc
+#cd ~
 
 # GVM
 #cd ~
@@ -273,7 +282,7 @@ sudo -u postgres psql -d $DBNAME -c "CREATE EXTENSION fineltra;"
 sudo -u postgres psql -d $DBNAME -c "CREATE SCHEMA av_chenyx06 AUTHORIZATION $DBADMIN;"
 
 cd ~
-wget https://www.dropbox.com/s/63lm992uypbol3m/chenyx06.sqlite?dl=0 -O chenyx06.sqlite
+wget https://www.dropbox.com/s/z9ex7n90k63osog/chenyx06.sqlite?dl=0 -O chenyx06.sqlite
 /usr/local/gdal_master/bin/ogr2ogr -f "PostgreSQL" PG:"dbname='$DBNAME' host='localhost' port='5432' user='$DBADMIN' password='$DBADMINPWD'" chenyx06.sqlite chenyx06 -lco SCHEMA=av_chenyx06 -nln chenyx06_triangles
 
 sudo -u postgres psql -d $DBNAME -c "GRANT USAGE ON SCHEMA av_chenyx06 TO $DBUSR;"
@@ -281,23 +290,29 @@ sudo -u postgres psql -d $DBNAME -c "GRANT SELECT ON av_chenyx06.chenyx06_triang
 
 # ili2pg
 #cd ~
-#wget http://www.eisenhutinformatik.ch/interlis/ili2pg/ili2pg-2.4.0.zip -O ili2pg-2.4.0.zip
-#unzip -d ~/Apps/ ili2pg-2.4.0.zip
-#chown $OSUSER:$OSUSER -R ~/Apps/ili2pg-2.4.0/
+#wget http://www.eisenhutinformatik.ch/interlis/ili2pg/ili2pg-3.0.3.zip -O ili2pg-3.0.3.zip
+#unzip -d ~/Apps/ ili2pg-3.0.3.zip
+#chown $OSUSER:$OSUSER -R ~/Apps/ili2pg-3.0.3/
+#cd ~
+
+#cd ~
+#wget http://www.eisenhutinformatik.ch/interlis/ili2gpkg/ili2gpkg-3.0.3.zip -O ili2gpkg-3.0.3.zip
+#unzip -d ~/Apps/ ili2gpkg-3.0.3.zip
+#chown $OSUSER:$OSUSER -R ~/Apps/ili2gpkg-3.0.3/
 #cd ~
 
 #cd ~
 #wget http://www.catais.org/geodaten/ch/so/agi/av/dm01avch24d/itf/lv03/ch_252400.itf -O ch_252400.itf
-#java -jar ~/Apps/ili2pg-2.4.0/ili2pg.jar --import --dbhost localhost --dbport 5432 --dbdatabase $DBNAME --dbschema ch_252400 --dbusr $DBADMIN --dbpwd $DBADMINPWD --modeldir http://models.geo.admin.ch --models DM01AVCH24D --createEnumTabs --nameByTopic --sqlEnableNull --createGeomIdx --createFkIdx ~/ch_252400.itf
+#java -jar ~/Apps/ili2pg-3.0.3/ili2pg.jar --import --dbhost localhost --dbport 5432 --dbdatabase $DBNAME --dbschema ch_252400 --dbusr $DBADMIN --dbpwd $DBADMINPWD --modeldir http://models.geo.admin.ch --models DM01AVCH24D --createEnumTabs --nameByTopic --sqlEnableNull --createGeomIdx --createFkIdx ~/ch_252400.itf
 #cd ~
 
 # Fonts...
 cd ~
-wget https://www.dropbox.com/s/e4ont2k6onxb018/Cadastra.zip?dl=0 -O Cadastra.zip
+wget https://www.dropbox.com/s/2go40p79blchvhw/Cadastra.zip?dl=0 -O Cadastra.zip
 unzip -d /usr/share/fonts/truetype/ Cadastra.zip
-wget https://www.dropbox.com/s/m24rz3cmwvfsqg1/Frutiger.zip?dl=0 -O Frutiger.zip
+wget https://www.dropbox.com/s/x44amelxnomona5/Frutiger.zip?dl=0 -O Frutiger.zip
 unzip -d /usr/share/fonts/truetype/ Frutiger.zip
-wget https://github.com/chrissimpkins/Hack/releases/download/v2.018/Hack-v2_018-ttf.zip -O Hack-v2_018-ttf.zip
+wget https://github.com/chrissimpkins/Hack/releases/download/v2.019/Hack-v2_019-ttf.zip -O Hack-v2_019-ttf.zip
 unzip -d /usr/share/fonts/truetype/ Hack-v2_018-ttf.zip
 fc-cache -f -v
 cd ~
