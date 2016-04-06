@@ -1,0 +1,32 @@
+
+sudo add-apt-repository ppa:ubuntu-lxc/lxd-stable
+sudo apt-get update
+sudo apt-get install golang
+
+
+sudo adduser --gecos "" git
+
+sudo -u postgres psql -d postgres -c "CREATE ROLE git LOGIN PASSWORD 'ziegler12';"
+
+sudo -u postgres createdb --owner git gogs
+sudo -u postgres psql -d gogs -c "GRANT ALL ON SCHEMA public TO git;"
+
+
+wget https://github.com/gogits/gogs/releases/download/v0.9.13/linux_amd64.tar.gz
+
+# nach Apps kopieren.
+
+
+chmod +x gogs
+./gogs web
+
+
+http://blog.tiger-workshop.com/gogs-quick-installation-on-ubuntu-14-04-with-init-d-auto-start/
+
+ln -s /home/git/gogs/gogs /usr/sbin/gogs
+ln -s /home/git/gogs/scripts/init/debian/gogs /etc/init.d/gogs
+chmod +x /etc/init.d/gogs
+update-rc.d gogs defaults
+
+
+WORKINGDIR=/home/git/Apps/gogs
