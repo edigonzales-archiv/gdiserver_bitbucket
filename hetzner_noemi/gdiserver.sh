@@ -115,6 +115,11 @@ make install
 cd ~
 /usr/local/qgis_2_12_2/lib/qgis/crssync
 
+
+# QGIS Enterprise 15.03
+#cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/qgis_enterprise_15-03-1-1 -DCMAKE_INSTALL_RPATH=/usr/local/qgis_enterprise_15-03-1-1/lib -DWITH_SERVER=OFF -DWITH_CUSTOM_WIDGETS=ON -DWITH_PYSPATIALITE=ON -DWITH_QSPATIALITE=ON -DGDAL_CONFIG=/usr/local/gdal_master/bin/gdal-config -DGDAL_INCLUDE_DIR=/usr/local/gdal_master/include -DGDAL_LIBRARY=/usr/local/gdal_master/lib/libgdal.so -DWITH_INTERNAL_QWTPOLAR=ON -DENABLE_MODELTEST=OFF -DENABLE_TESTS=OFF -DWITH_GRASS=OFF
+
+
 # Install some additional stuff
 apt-get --yes install vim
 apt-get --yes install subversion
