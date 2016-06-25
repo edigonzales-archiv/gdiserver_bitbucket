@@ -1,0 +1,7 @@
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local/mapcache -DCMAKE_INSTALL_RPATH=/usr/local/mapcache/lib -DWITH_APACHE=ON -DWITH_GDAL=ON -DWITH_GEOS=ON -DWITH_OGR=ON -DWITH_PIXMAN=ON -DWITH_SQLITE=ON -DWITH_VERSION_STRING=ON
+
+make 
+make install
+
+
+sudo ldconfig ????
