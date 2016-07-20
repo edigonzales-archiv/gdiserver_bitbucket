@@ -1,0 +1,4 @@
+sudo apt-get --yes intall libapache2-mod-php5
+
+
+https://www.dokuwiki.org/install:ubuntu
